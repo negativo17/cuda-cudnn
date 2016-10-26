@@ -5,7 +5,7 @@ Version:        5.1
 Release:        2%{?dist}
 Epoch:          1
 Summary:        NVIDIA CUDA Deep Neural Network library (cuDNN)
-License:        ASD
+License:        NVIDIA License
 URL:            https://developer.nvidia.com/cudnn
 ExclusiveArch:  x86_64
 
@@ -14,8 +14,6 @@ Source1:        cudnn-%{cuda_version}-samples-v%{version}.tgz
 Source2:        CUDNN_Library.pdf
 Source3:        cuDNN_v5.1_ReleaseNotes.pdf
 Source4:        EULA.txt
-
-Requires:       cuda >= %{?epoch:%{epoch}:}%{cuda_version}
 
 %description
 The NVIDIA CUDA Deep Neural Network library (cuDNN) is a GPU-accelerated
@@ -27,7 +25,6 @@ Learning SDK.
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
-Requires:       cuda%{?_isa} >= %{?epoch:%{epoch}:}%{cuda_version}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for developing
@@ -64,7 +61,7 @@ cp -frp *samples* %{buildroot}%{_datadir}/cuda/
 
 %changelog
 * Wed Oct 26 2016 Simone Caronni <negativo17@gmail.com> - 1:5.1-2
-- Fix cuda dependency.
+- Remove useless CUDA dependency.
 
 * Thu Oct 20 2016 Simone Caronni <negativo17@gmail.com> - 1:5.1-1
 - First build.
