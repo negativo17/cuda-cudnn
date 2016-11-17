@@ -2,7 +2,7 @@
 
 Name:           cuda-cudnn
 Version:        5.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 Epoch:          1
 Summary:        NVIDIA CUDA Deep Neural Network library (cuDNN)
 License:        NVIDIA License
@@ -39,8 +39,7 @@ mkdir -p %{buildroot}%{_libdir}
 mkdir -p %{buildroot}%{_datadir}/cuda
 mkdir -p %{buildroot}%{_includedir}/cuda
 
-install -p -m 755 %{_lib}/*.so* %{buildroot}%{_libdir}/
-install -p -m 644 %{_lib}/*.a %{buildroot}%{_libdir}/
+cp -pa %{_lib}/*.so* %{_lib}/*.a %{buildroot}%{_libdir}/
 install -p -m 644 include/* %{buildroot}%{_includedir}/cuda/
 cp -frp *samples* %{buildroot}%{_datadir}/cuda/
 
@@ -60,6 +59,9 @@ cp -frp *samples* %{buildroot}%{_datadir}/cuda/
 %{_libdir}/libcudnn_static.a
 
 %changelog
+* Thu Nov 17 2016 Simone Caronni <negativo17@gmail.com> - 1:5.1-3
+- Fix symlink for libraries.
+
 * Wed Oct 26 2016 Simone Caronni <negativo17@gmail.com> - 1:5.1-2
 - Remove useless CUDA dependency.
 
