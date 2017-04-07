@@ -1,19 +1,19 @@
 %global         cuda_version 8.0
 
 Name:           cuda-cudnn
-Version:        5.1
-Release:        3%{?dist}
+Version:        6.0
+Release:        1%{?dist}
 Epoch:          1
 Summary:        NVIDIA CUDA Deep Neural Network library (cuDNN)
 License:        NVIDIA License
 URL:            https://developer.nvidia.com/cudnn
 ExclusiveArch:  x86_64
 
-Source0:        cudnn-%{cuda_version}-linux-x64-v%{version}-tgz.tgz
-Source1:        cudnn-%{cuda_version}-samples-v%{version}.tgz
+Source0:        cudnn-%{cuda_version}-linux-x64-v%{version}.tgz
+Source1:        libcudnn6-doc_%{version}.20-1+cuda%{cuda_version}_amd64.deb
 Source2:        CUDNN_Library.pdf
-Source3:        cuDNN_v5.1_ReleaseNotes.pdf
-Source4:        EULA.txt
+Source3:        cuDNN_v%{version}_ReleaseNotes.pdf
+Source4:        NVIDIA_SLA+cuDNN_Supp_Feb2017_release.pdf
 
 %description
 The NVIDIA CUDA Deep Neural Network library (cuDNN) is a GPU-accelerated
@@ -25,14 +25,20 @@ Learning SDK.
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:       cuda%{?_isa} >= %{?epoch:%{epoch}:}%{cuda_version}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for developing
 applications that use %{name}.
 
 %prep
-%setup -a1 -qn cuda
+%setup -qn cuda
 cp %{SOURCE2} %{SOURCE3} %{SOURCE4} .
+
+# Samples
+ar x %{SOURCE1}
+tar -xvJf data.tar.xz ./usr/src --strip-components=3
+rm -f data.tar.xz
 
 %install
 mkdir -p %{buildroot}%{_libdir}
@@ -48,17 +54,20 @@ cp -frp *samples* %{buildroot}%{_datadir}/cuda/
 %postun -p /sbin/ldconfig
 
 %files
-%license EULA.txt
+%license NVIDIA_SLA+cuDNN_Supp_Feb2017_release.pdf
 %{_libdir}/libcudnn.so.*
 
 %files devel
-%doc *pdf
+%doc CUDNN_Library.pdf cuDNN_v%{version}_ReleaseNotes.pdf
 %{_datadir}/cuda/*
 %{_includedir}/cuda/*
 %{_libdir}/libcudnn.so
 %{_libdir}/libcudnn_static.a
 
 %changelog
+* Fri Apr 07 2017 Simone Caronni <negativo17@gmail.com> - 1:6.0-1
+- Update to version 6.0.
+
 * Thu Nov 17 2016 Simone Caronni <negativo17@gmail.com> - 1:5.1-3
 - Fix symlink for libraries.
 
