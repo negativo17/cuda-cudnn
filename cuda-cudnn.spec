@@ -1,7 +1,7 @@
-%global         cuda_version 8.0
+%global         cuda_version 9.0
 
 Name:           cuda-cudnn
-Version:        6.0
+Version:        7
 Release:        1%{?dist}
 Epoch:          1
 Summary:        NVIDIA CUDA Deep Neural Network library (cuDNN)
@@ -10,10 +10,9 @@ URL:            https://developer.nvidia.com/cudnn
 ExclusiveArch:  x86_64
 
 Source0:        cudnn-%{cuda_version}-linux-x64-v%{version}.tgz
-Source1:        libcudnn6-doc_%{version}.20-1+cuda%{cuda_version}_amd64.deb
-Source2:        CUDNN_Library.pdf
-Source3:        cuDNN_v%{version}_ReleaseNotes.pdf
-Source4:        NVIDIA_SLA+cuDNN_Supp_Feb2017_release.pdf
+Source1:        libcudnn7-doc_7.0.1.13-1+cuda%{cuda_version}_amd64.deb
+Source2:        cuDNN-Library-User-Guide.pdf
+Source3:        cuDNN-Release-Notes.pdf
 
 %description
 The NVIDIA CUDA Deep Neural Network library (cuDNN) is a GPU-accelerated
@@ -33,7 +32,8 @@ applications that use %{name}.
 
 %prep
 %setup -qn cuda
-cp %{SOURCE2} %{SOURCE3} %{SOURCE4} .
+cp %{SOURCE2} %{SOURCE3} .
+chmod -x *.txt
 
 # Samples
 ar x %{SOURCE1}
@@ -54,17 +54,20 @@ cp -frp *samples* %{buildroot}%{_datadir}/cuda/
 %postun -p /sbin/ldconfig
 
 %files
-%license NVIDIA_SLA+cuDNN_Supp_Feb2017_release.pdf
+%license *.txt
 %{_libdir}/libcudnn.so.*
 
 %files devel
-%doc CUDNN_Library.pdf cuDNN_v%{version}_ReleaseNotes.pdf
+%doc *.pdf
 %{_datadir}/cuda/*
 %{_includedir}/cuda/*
 %{_libdir}/libcudnn.so
 %{_libdir}/libcudnn_static.a
 
 %changelog
+* Wed Aug 30 2017 Simone Caronni <negativo17@gmail.com> - 1:7-1
+- Update to 7.
+
 * Fri Apr 07 2017 Simone Caronni <negativo17@gmail.com> - 1:6.0-1
 - Update to version 6.0.
 
