@@ -3,7 +3,7 @@
 
 Name:           cuda-cudnn
 Version:        7.0.5.15
-Release:        2%{?dist}
+Release:        3%{?dist}
 Epoch:          1
 Summary:        NVIDIA CUDA Deep Neural Network library (cuDNN)
 License:        NVIDIA License
@@ -15,8 +15,8 @@ Source1:        libcudnn7-doc_%{version}-1+cuda%{cuda_version}_amd64.deb
 Source2:        cuDNN-Developer-Guide.pdf
 Source3:        cuDNN-Release-Notes.pdf
 
-Obsoletes:      %{name}5.1%{?_isa} < 7
-Obsoletes:      %{name}6.0%{?_isa} < 7
+Obsoletes:      %{name}5.1 <= %{?epoch:%{epoch}:}%{version}-%{release}
+Obsoletes:      %{name}6.0 <= %{?epoch:%{epoch}:}%{version}-%{release}
 
 %description
 The NVIDIA CUDA Deep Neural Network library (cuDNN) is a GPU-accelerated
@@ -30,8 +30,8 @@ Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 Requires:       cuda%{?_isa} >= %{?epoch:%{epoch}:}%{cuda_version}
 
-Obsoletes:      %{name}5.1%{?_isa}-devel < 7
-Obsoletes:      %{name}6.0%{?_isa}-devel < 7
+Obsoletes:      %{name}5.1-devel <= %{?epoch:%{epoch}:}%{version}-%{release}
+Obsoletes:      %{name}6.0-devel <= %{?epoch:%{epoch}:}%{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for developing
@@ -72,6 +72,9 @@ cp -frp *samples* %{buildroot}%{_datadir}/cuda/
 %{_libdir}/libcudnn_static.a
 
 %changelog
+* Thu Feb 15 2018 Simone Caronni <negativo17@gmail.com> - 1:7.0.5.15-3
+- Fix upgrade path from 5.1/6.0.
+
 * Fri Feb 02 2018 Simone Caronni <negativo17@gmail.com> - 1:7.0.5.15-2
 - Obsoletes cuDNN 5.x and 6.x on upgrades to CUDA 9.1.
 
