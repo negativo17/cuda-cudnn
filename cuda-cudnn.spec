@@ -1,9 +1,9 @@
 %global         cuda_version 9.1
-%global         cuda_cudnn_major 7
+%global         cuda_cudnn_major 7.1
 
 Name:           cuda-cudnn
-Version:        7.0.5.15
-Release:        3%{?dist}
+Version:        7.1.3.16
+Release:        1%{?dist}
 Epoch:          1
 Summary:        NVIDIA CUDA Deep Neural Network library (cuDNN)
 License:        NVIDIA License
@@ -12,8 +12,6 @@ ExclusiveArch:  x86_64
 
 Source0:        cudnn-%{cuda_version}-linux-x64-v%{cuda_cudnn_major}.tgz
 Source1:        libcudnn7-doc_%{version}-1+cuda%{cuda_version}_amd64.deb
-Source2:        cuDNN-Developer-Guide.pdf
-Source3:        cuDNN-Release-Notes.pdf
 
 Obsoletes:      %{name}5.1 <= %{?epoch:%{epoch}:}%{version}-%{release}
 Obsoletes:      %{name}6.0 <= %{?epoch:%{epoch}:}%{version}-%{release}
@@ -39,7 +37,6 @@ applications that use %{name}.
 
 %prep
 %setup -qn cuda
-cp %{SOURCE2} %{SOURCE3} .
 chmod -x *.txt
 
 # Samples
@@ -65,13 +62,15 @@ cp -frp *samples* %{buildroot}%{_datadir}/cuda/
 %{_libdir}/libcudnn.so.*
 
 %files devel
-%doc *.pdf
 %{_datadir}/cuda/*
 %{_includedir}/cuda/*
 %{_libdir}/libcudnn.so
 %{_libdir}/libcudnn_static.a
 
 %changelog
+* Thu Apr 26 2018 Simone Caronni <negativo17@gmail.com> - 1:7.1.3.16-1
+- Update to 7.1.3.16.
+
 * Thu Feb 15 2018 Simone Caronni <negativo17@gmail.com> - 1:7.0.5.15-3
 - Fix upgrade path from 5.1/6.0.
 
