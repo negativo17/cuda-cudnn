@@ -1,8 +1,8 @@
-%global         cuda_version 9.1
-%global         cuda_cudnn_major 7.1
+%global         cuda_version 9.2
+%global         cuda_cudnn_major 7.2
 
 Name:           cuda-cudnn
-Version:        7.1.3.16
+Version:        7.2.1.38
 Release:        1%{?dist}
 Epoch:          1
 Summary:        NVIDIA CUDA Deep Neural Network library (cuDNN)
@@ -10,7 +10,7 @@ License:        NVIDIA License
 URL:            https://developer.nvidia.com/cudnn
 ExclusiveArch:  x86_64
 
-Source0:        cudnn-%{cuda_version}-linux-x64-v%{cuda_cudnn_major}.tgz
+Source0:        cudnn-%{cuda_version}-linux-x64-v%{version}.tgz
 Source1:        libcudnn7-doc_%{version}-1+cuda%{cuda_version}_amd64.deb
 
 Obsoletes:      %{name}5.1 <= %{?epoch:%{epoch}:}%{version}-%{release}
@@ -27,9 +27,6 @@ Learning SDK.
 Summary:        Development files for %{name}
 Requires:       %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 Requires:       cuda%{?_isa} >= %{?epoch:%{epoch}:}%{cuda_version}
-
-Obsoletes:      %{name}5.1-devel <= %{?epoch:%{epoch}:}%{version}-%{release}
-Obsoletes:      %{name}6.0-devel <= %{?epoch:%{epoch}:}%{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for developing
@@ -68,6 +65,9 @@ cp -frp *samples* %{buildroot}%{_datadir}/cuda/
 %{_libdir}/libcudnn_static.a
 
 %changelog
+* Tue Aug 28 2018 Simone Caronni <negativo17@gmail.com> - 1:7.2.1.38-1
+- Update to 7.2.1.38 for CUDA 9.2.
+
 * Thu Apr 26 2018 Simone Caronni <negativo17@gmail.com> - 1:7.1.3.16-1
 - Update to 7.1.3.16.
 
