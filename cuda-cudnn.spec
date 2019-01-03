@@ -1,8 +1,8 @@
-%global         cuda_version 9.2
-%global         cuda_cudnn_major 7.2
+%global         cuda_version 10.0
+%global         cuda_cudnn_major 7.4
 
 Name:           cuda-cudnn
-Version:        7.2.1.38
+Version:        7.4.2.24
 Release:        1%{?dist}
 Epoch:          1
 Summary:        NVIDIA CUDA Deep Neural Network library (cuDNN)
@@ -65,6 +65,9 @@ cp -frp *samples* %{buildroot}%{_datadir}/cuda/
 %{_libdir}/libcudnn_static.a
 
 %changelog
+* Thu Jan 03 2019 Simone Caronni <negativo17@gmail.com> - 1:7.4.2.24-1
+- Update to 7.4.2.24 for CUDA 10.
+
 * Tue Aug 28 2018 Simone Caronni <negativo17@gmail.com> - 1:7.2.1.38-1
 - Update to 7.2.1.38 for CUDA 9.2.
 
