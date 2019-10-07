@@ -2,7 +2,7 @@
 %global         cuda_cudnn_major 7.5
 
 Name:           cuda-cudnn
-Version:        7.6.0.64
+Version:        7.6.4.38
 Release:        1%{?dist}
 Epoch:          1
 Summary:        NVIDIA CUDA Deep Neural Network library (cuDNN)
@@ -41,6 +41,8 @@ ar x %{SOURCE1}
 tar -xvJf data.tar.xz ./usr/src --strip-components=3
 rm -f data.tar.xz
 
+find . -name "*py" -exec sed -i -e 's|/usr/bin/env python|/usr/bin/python2|g' {} \;
+
 %install
 mkdir -p %{buildroot}%{_libdir}
 mkdir -p %{buildroot}%{_datadir}/cuda
@@ -65,6 +67,9 @@ cp -frp *samples* %{buildroot}%{_datadir}/cuda/
 %{_libdir}/libcudnn_static.a
 
 %changelog
+* Mon Oct 07 2019 Simone Caronni <negativo17@gmail.com> - 1:7.6.4.38-1
+- Update to 7.6.4.38.
+
 * Tue Jun 11 2019 Simone Caronni <negativo17@gmail.com> - 1:7.6.0.64-1
 - Update to 7.6.0.64.
 
