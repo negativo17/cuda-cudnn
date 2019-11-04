@@ -3,7 +3,7 @@
 
 Name:           cuda-cudnn
 Version:        7.6.4.38
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          1
 Summary:        NVIDIA CUDA Deep Neural Network library (cuDNN)
 License:        NVIDIA License
@@ -31,6 +31,14 @@ Requires:       cuda%{?_isa} >= %{?epoch:%{epoch}:}%{cuda_version}
 %description    devel
 The %{name}-devel package contains libraries and header files for developing
 applications that use %{name}.
+
+%package        samples
+Summary:        NVIDIA CUDA Deep Neural Network library samples
+Requires:       %{name}-devel%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:       cuda%{?_isa} >= %{?epoch:%{epoch}:}%{cuda_version}
+
+%description    samples
+Contains an extensive set of example cuDNN programs.
 
 %prep
 %setup -qn cuda
@@ -61,12 +69,17 @@ cp -frp *samples* %{buildroot}%{_datadir}/cuda/
 %{_libdir}/libcudnn.so.*
 
 %files devel
-%{_datadir}/cuda/*
 %{_includedir}/cuda/*
 %{_libdir}/libcudnn.so
 %{_libdir}/libcudnn_static.a
 
+%files samples
+%{_datadir}/cuda/*
+
 %changelog
+* Mon Nov 04 2019 Simone Caronni <negativo17@gmail.com> - 1:7.6.4.38-2
+- Split samples subpackage.
+
 * Mon Oct 07 2019 Simone Caronni <negativo17@gmail.com> - 1:7.6.4.38-1
 - Update to 7.6.4.38.
 
