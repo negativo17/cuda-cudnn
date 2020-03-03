@@ -1,9 +1,9 @@
-%global         cuda_version 10.1
-%global         cuda_cudnn_major 7.5
+%global         cuda_version 10.2
+%global         cuda_cudnn_major 7.6
 
 Name:           cuda-cudnn
-Version:        7.6.4.38
-Release:        2%{?dist}
+Version:        7.6.5.32
+Release:        1%{?dist}
 Epoch:          1
 Summary:        NVIDIA CUDA Deep Neural Network library (cuDNN)
 License:        NVIDIA License
@@ -77,6 +77,9 @@ cp -frp *samples* %{buildroot}%{_datadir}/cuda/
 %{_datadir}/cuda/*
 
 %changelog
+* Tue Mar 03 2020 Simone Caronni <negativo17@gmail.com> - 1:7.6.5.32-1
+- Update to 7.6.5.32.
+
 * Mon Nov 04 2019 Simone Caronni <negativo17@gmail.com> - 1:7.6.4.38-2
 - Split samples subpackage.
 
