@@ -1,8 +1,8 @@
-%global         cuda_version 10.2
-%global         cuda_cudnn_major 7.6
+%global         cuda_version 11.1
+%global         cuda_cudnn_major 8.0
 
 Name:           cuda-cudnn
-Version:        7.6.5.32
+Version:        8.0.5.39
 Release:        1%{?dist}
 Epoch:          1
 Summary:        NVIDIA CUDA Deep Neural Network library (cuDNN)
@@ -11,10 +11,7 @@ URL:            https://developer.nvidia.com/cudnn
 ExclusiveArch:  x86_64
 
 Source0:        cudnn-%{cuda_version}-linux-x64-v%{version}.tgz
-Source1:        libcudnn7-doc_%{version}-1+cuda%{cuda_version}_amd64.deb
-
-Obsoletes:      %{name}5.1 <= %{?epoch:%{epoch}:}%{version}-%{release}
-Obsoletes:      %{name}6.0 <= %{?epoch:%{epoch}:}%{version}-%{release}
+Source1:        libcudnn8-samples_%{version}-1+cuda%{cuda_version}_amd64.deb
 
 %description
 The NVIDIA CUDA Deep Neural Network library (cuDNN) is a GPU-accelerated
@@ -60,23 +57,36 @@ cp -pa %{_lib}/*.so* %{_lib}/*.a %{buildroot}%{_libdir}/
 install -p -m 644 include/* %{buildroot}%{_includedir}/cuda/
 cp -frp *samples* %{buildroot}%{_datadir}/cuda/
 
-%post -p /sbin/ldconfig
-
-%postun -p /sbin/ldconfig
+%ldconfig_scriptlets
 
 %files
 %license *.txt
 %{_libdir}/libcudnn.so.*
+%{_libdir}/libcudnn_adv_infer.so.*
+%{_libdir}/libcudnn_adv_train.so.*
+%{_libdir}/libcudnn_cnn_infer.so.*
+%{_libdir}/libcudnn_cnn_train.so.*
+%{_libdir}/libcudnn_ops_infer.so.*
+%{_libdir}/libcudnn_ops_train.so.*
 
 %files devel
 %{_includedir}/cuda/*
 %{_libdir}/libcudnn.so
+%{_libdir}/libcudnn_adv_infer.so
+%{_libdir}/libcudnn_adv_train.so
+%{_libdir}/libcudnn_cnn_infer.so
+%{_libdir}/libcudnn_cnn_train.so
+%{_libdir}/libcudnn_ops_infer.so
+%{_libdir}/libcudnn_ops_train.so
 %{_libdir}/libcudnn_static.a
 
 %files samples
 %{_datadir}/cuda/*
 
 %changelog
+* Mon Nov 16 2020 Simone Caronni <negativo17@gmail.com> - 1:8.0.5.39-1
+- Update to 8.0.5.39.
+
 * Tue Mar 03 2020 Simone Caronni <negativo17@gmail.com> - 1:7.6.5.32-1
 - Update to 7.6.5.32.
 
