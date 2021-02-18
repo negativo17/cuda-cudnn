@@ -1,8 +1,8 @@
-%global         cuda_version 11.1
-%global         cuda_cudnn_major 8.0
+%global         cuda_version 11.2
+%global         cuda_cudnn_major 8.1
 
 Name:           cuda-cudnn
-Version:        8.0.5.39
+Version:        8.1.0.77
 Release:        1%{?dist}
 Epoch:          1
 Summary:        NVIDIA CUDA Deep Neural Network library (cuDNN)
@@ -78,12 +78,16 @@ cp -frp *samples* %{buildroot}%{_datadir}/cuda/
 %{_libdir}/libcudnn_cnn_train.so
 %{_libdir}/libcudnn_ops_infer.so
 %{_libdir}/libcudnn_ops_train.so
+%{_libdir}/libcudnn_static_v8.a
 %{_libdir}/libcudnn_static.a
 
 %files samples
 %{_datadir}/cuda/*
 
 %changelog
+* Thu Feb 18 2021 Simone Caronni <negativo17@gmail.com> - 1:8.1.0.77-1
+- Update to 8.1.0.77.
+
 * Mon Nov 16 2020 Simone Caronni <negativo17@gmail.com> - 1:8.0.5.39-1
 - Update to 8.0.5.39.
 
