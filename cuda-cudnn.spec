@@ -2,11 +2,11 @@
 %global         __strip /bin/true
 %global         _missing_build_ids_terminate_build 0
 %global         _build_id_links none
-%global         cuda_version 11.3
+%global         cuda_version 11.4
 %global         cuda_cudnn_major 8.2
 
 Name:           cuda-cudnn
-Version:        8.2.0.53
+Version:        8.2.2.26
 Release:        1%{?dist}
 Epoch:          1
 Summary:        NVIDIA CUDA Deep Neural Network library (cuDNN)
@@ -14,6 +14,7 @@ License:        NVIDIA License
 URL:            https://developer.nvidia.com/cudnn
 ExclusiveArch:  x86_64
 
+# https://developer.nvidia.com/rdp/cudnn-download
 Source0:        cudnn-%{cuda_version}-linux-x64-v%{version}.tgz
 Source1:        libcudnn8-samples_%{version}-1+cuda%{cuda_version}_amd64.deb
 
@@ -102,6 +103,9 @@ cp -frp *samples* %{buildroot}%{_datadir}/cuda/
 %{_datadir}/cuda/*
 
 %changelog
+* Wed Jul 21 2021 Simone Caronni <negativo17@gmail.com> - 1:8.2.2.26-1
+- Update to 8.2.2.26.
+
 * Mon Apr 26 2021 Simone Caronni <negativo17@gmail.com> - 1:8.2.0.53-1
 - Update to 8.2.0.53.
 - Split static libraries in separate subpackage.
