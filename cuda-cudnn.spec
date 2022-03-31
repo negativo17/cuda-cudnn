@@ -86,12 +86,18 @@ install -p -m 644 include/* %{buildroot}%{_includedir}/
 %{_libdir}/libcudnn_ops_train.so
 
 %files static
+%{_libdir}/libcudnn_adv_infer_static.a
+%{_libdir}/libcudnn_adv_infer_static_v8.a
+%{_libdir}/libcudnn_adv_train_static.a
+%{_libdir}/libcudnn_adv_train_static_v8.a
 %{_libdir}/libcudnn_cnn_infer_static.a
 %{_libdir}/libcudnn_cnn_infer_static_v8.a
 %{_libdir}/libcudnn_cnn_train_static.a
 %{_libdir}/libcudnn_cnn_train_static_v8.a
-%{_libdir}/libcudnn_static.a
-%{_libdir}/libcudnn_static_v8.a
+%{_libdir}/libcudnn_ops_infer_static.a
+%{_libdir}/libcudnn_ops_infer_static_v8.a
+%{_libdir}/libcudnn_ops_train_static.a
+%{_libdir}/libcudnn_ops_train_static_v8.a
 
 %changelog
 * Thu Mar 31 2022 Simone Caronni <negativo17@gmail.com> - 1:8.3.3.40-1
