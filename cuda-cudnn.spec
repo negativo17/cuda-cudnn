@@ -2,21 +2,22 @@
 %global         __strip /bin/true
 %global         _missing_build_ids_terminate_build 0
 %global         _build_id_links none
-%global         cuda_version 11.4
-%global         cuda_cudnn_major 8.2
+%global         cuda_version 11.5
+%global         cuda_cudnn_major 8.3
 
 Name:           cuda-cudnn
-Version:        8.2.4.15
+Version:        8.3.3.40
 Release:        1%{?dist}
 Epoch:          1
 Summary:        NVIDIA CUDA Deep Neural Network library (cuDNN)
-License:        NVIDIA License
+License:        NVIDIA Software Development Kit
 URL:            https://developer.nvidia.com/cudnn
-ExclusiveArch:  x86_64
+ExclusiveArch:  x86_64 ppc64le aarch64
 
 # https://developer.nvidia.com/rdp/cudnn-download
-Source0:        cudnn-%{cuda_version}-linux-x64-v%{version}.tgz
-Source1:        libcudnn8-samples_%{version}-1+cuda%{cuda_version}_amd64.deb
+Source0:        cudnn-linux-x86_64-%{version}_cuda%{cuda_version}-archive.tar.xz
+Source1:        cudnn-linux-ppc64le-%{version}_cuda%{cuda_version}-archive.tar.xz
+Source2:        cudnn-linux-sbsa-%{version}_cuda%{cuda_version}-archive.tar.xz
 
 %description
 The NVIDIA CUDA Deep Neural Network library (cuDNN) is a GPU-accelerated
@@ -34,14 +35,6 @@ Requires:       cuda%{?_isa} >= %{?epoch:%{epoch}:}%{cuda_version}
 The %{name}-devel package contains libraries and header files for developing
 applications that use %{name}.
 
-%package        samples
-Summary:        NVIDIA CUDA Deep Neural Network library samples
-Requires:       %{name}-devel%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
-Requires:       cuda%{?_isa} >= %{?epoch:%{epoch}:}%{cuda_version}
-
-%description    samples
-Contains an extensive set of example cuDNN programs.
-
 %package        static
 Summary:        Static libraries for %{name}
 Requires:       %{name}-devel%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
@@ -50,29 +43,30 @@ Requires:       %{name}-devel%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 Static library files for %{name}.
 
 %prep
-%setup -qn cuda
-chmod -x *.txt
+%ifarch x86_64
+%setup -q -n cudnn-linux-x86_64-%{version}_cuda%{cuda_version}-archive
+%endif
 
-# Samples
-ar x %{SOURCE1}
-tar -xvJf data.tar.xz ./usr/src --strip-components=3
-rm -f data.tar.xz
+%ifarch ppc64le
+%setup -q -T -b 1 -n cudnn-linux-ppc64le-%{version}_cuda%{cuda_version}-archive
+%endif
 
-find . -name "*py" -exec sed -i -e 's|/usr/bin/env python|/usr/bin/python2|g' {} \;
+%ifarch aarch64
+%setup -q -T -b 2 -n cudnn-linux-sbsa-%{version}_cuda%{cuda_version}-archive
+%endif
 
 %install
 mkdir -p %{buildroot}%{_libdir}
-mkdir -p %{buildroot}%{_datadir}/cuda
-mkdir -p %{buildroot}%{_includedir}/cuda
+mkdir -p %{buildroot}%{_includedir}
 
-cp -pa %{_lib}/*.so* %{_lib}/*.a %{buildroot}%{_libdir}/
-install -p -m 644 include/* %{buildroot}%{_includedir}/cuda/
-cp -frp *samples* %{buildroot}%{_datadir}/cuda/
+install -p -m 755 lib/*.so* %{buildroot}%{_libdir}/
+install -p -m 644 lib/*.a %{buildroot}%{_libdir}/
+install -p -m 644 include/* %{buildroot}%{_includedir}/
 
-%ldconfig_scriptlets
+%{?ldconfig_scriptlets}
 
 %files
-%license *.txt
+%license LICENSE
 %{_libdir}/libcudnn.so.*
 %{_libdir}/libcudnn_adv_infer.so.*
 %{_libdir}/libcudnn_adv_train.so.*
@@ -82,7 +76,7 @@ cp -frp *samples* %{buildroot}%{_datadir}/cuda/
 %{_libdir}/libcudnn_ops_train.so.*
 
 %files devel
-%{_includedir}/cuda/*
+%{_includedir}/*
 %{_libdir}/libcudnn.so
 %{_libdir}/libcudnn_adv_infer.so
 %{_libdir}/libcudnn_adv_train.so
@@ -99,10 +93,12 @@ cp -frp *samples* %{buildroot}%{_datadir}/cuda/
 %{_libdir}/libcudnn_static.a
 %{_libdir}/libcudnn_static_v8.a
 
-%files samples
-%{_datadir}/cuda/*
-
 %changelog
+* Thu Mar 31 2022 Simone Caronni <negativo17@gmail.com> - 1:8.3.3.40-1
+- Update to 8.3.3.40, allow building on ppc64le and aarch64.
+- Drop samples subpackage.
+- Move headers one level above.
+
 * Tue Nov 02 2021 Simone Caronni <negativo17@gmail.com> - 1:8.2.4.15-1
 - Update to 8.2.4.15
 
