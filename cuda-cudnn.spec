@@ -56,11 +56,14 @@ Static library files for %{name}.
 
 %install
 mkdir -p %{buildroot}%{_libdir}
-mkdir -p %{buildroot}%{_includedir}
+cp -a lib/*.so* %{buildroot}%{_libdir}/
+chmod 755 %{buildroot}%{_libdir}/*.so*
+cp -a lib/*.a %{buildroot}%{_libdir}/
+chmod 644 %{buildroot}%{_libdir}/*.a
 
-install -p -m 755 lib/*.so* %{buildroot}%{_libdir}/
-install -p -m 644 lib/*.a %{buildroot}%{_libdir}/
-install -p -m 644 include/* %{buildroot}%{_includedir}/
+mkdir -p %{buildroot}%{_includedir}
+cp -a include/* %{buildroot}%{_includedir}/
+chmod 644 %{buildroot}%{_includedir}/*
 
 %{?ldconfig_scriptlets}
 
