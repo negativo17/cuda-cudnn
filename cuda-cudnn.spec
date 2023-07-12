@@ -5,7 +5,7 @@
 %global         cuda_version 12
 
 Name:           cuda-cudnn
-Version:        8.8.1.3
+Version:        8.9.3.28
 Release:        1%{?dist}
 Epoch:          1
 Summary:        NVIDIA CUDA Deep Neural Network library (cuDNN)
@@ -102,6 +102,9 @@ chmod 644 %{buildroot}%{_includedir}/*
 %{_libdir}/libcudnn_ops_train_static_v8.a
 
 %changelog
+* Wed Jul 12 2023 Simone Caronni <negativo17@gmail.com> - 1:8.9.3.28-1
+- Update to 8.9.3.28.
+
 * Tue Apr 11 2023 Simone Caronni <negativo17@gmail.com> - 1:8.8.1.3-1
 - Update to 8.8.1.3.
 
