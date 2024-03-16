@@ -5,18 +5,16 @@
 %global         cuda_version 12
 
 Name:           cuda-cudnn
-Version:        8.9.7.29
+Version:        9.0.0.312
 Release:        1%{?dist}
 Epoch:          1
 Summary:        NVIDIA CUDA Deep Neural Network library (cuDNN)
 License:        NVIDIA Software Development Kit
 URL:            https://developer.nvidia.com/cudnn
-ExclusiveArch:  x86_64 ppc64le aarch64
+ExclusiveArch:  x86_64 aarch64
 
-# https://developer.nvidia.com/rdp/cudnn-download
-Source0:        cudnn-linux-x86_64-%{version}_cuda%{cuda_version}-archive.tar.xz
-Source1:        cudnn-linux-ppc64le-%{version}_cuda%{cuda_version}-archive.tar.xz
-Source2:        cudnn-linux-sbsa-%{version}_cuda%{cuda_version}-archive.tar.xz
+Source0:        https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-x86_64/cudnn-linux-x86_64-%{version}_cuda%{cuda_version}-archive.tar.xz
+Source2:        https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-sbsa/cudnn-linux-sbsa-%{version}_cuda%{cuda_version}-archive.tar.xz
 
 %description
 The NVIDIA CUDA Deep Neural Network library (cuDNN) is a GPU-accelerated
@@ -46,12 +44,8 @@ Static library files for %{name}.
 %setup -q -n cudnn-linux-x86_64-%{version}_cuda%{cuda_version}-archive
 %endif
 
-%ifarch ppc64le
-%setup -q -T -b 1 -n cudnn-linux-ppc64le-%{version}_cuda%{cuda_version}-archive
-%endif
-
 %ifarch aarch64
-%setup -q -T -b 2 -n cudnn-linux-sbsa-%{version}_cuda%{cuda_version}-archive
+%setup -q -T -b 1 -n cudnn-linux-sbsa-%{version}_cuda%{cuda_version}-archive
 %endif
 
 %install
@@ -69,39 +63,19 @@ chmod 644 %{buildroot}%{_includedir}/*
 
 %files
 %license LICENSE
-%{_libdir}/libcudnn.so.*
-%{_libdir}/libcudnn_adv_infer.so.*
-%{_libdir}/libcudnn_adv_train.so.*
-%{_libdir}/libcudnn_cnn_infer.so.*
-%{_libdir}/libcudnn_cnn_train.so.*
-%{_libdir}/libcudnn_ops_infer.so.*
-%{_libdir}/libcudnn_ops_train.so.*
+%{_libdir}/libcudnn*.so.*
 
 %files devel
-%{_includedir}/*
-%{_libdir}/libcudnn.so
-%{_libdir}/libcudnn_adv_infer.so
-%{_libdir}/libcudnn_adv_train.so
-%{_libdir}/libcudnn_cnn_infer.so
-%{_libdir}/libcudnn_cnn_train.so
-%{_libdir}/libcudnn_ops_infer.so
-%{_libdir}/libcudnn_ops_train.so
+%{_includedir}/cudnn*
+%{_libdir}/libcudnn*.so
 
 %files static
-%{_libdir}/libcudnn_adv_infer_static.a
-%{_libdir}/libcudnn_adv_infer_static_v8.a
-%{_libdir}/libcudnn_adv_train_static.a
-%{_libdir}/libcudnn_adv_train_static_v8.a
-%{_libdir}/libcudnn_cnn_infer_static.a
-%{_libdir}/libcudnn_cnn_infer_static_v8.a
-%{_libdir}/libcudnn_cnn_train_static.a
-%{_libdir}/libcudnn_cnn_train_static_v8.a
-%{_libdir}/libcudnn_ops_infer_static.a
-%{_libdir}/libcudnn_ops_infer_static_v8.a
-%{_libdir}/libcudnn_ops_train_static.a
-%{_libdir}/libcudnn_ops_train_static_v8.a
+%{_libdir}/libcudnn*.a
 
 %changelog
+* Sat Mar 16 2024 Simone Caronni <negativo17@gmail.com> - 1:9.0.0.312-1
+- Update to 9.0.0.312.
+
 * Sat Jan 06 2024 Simone Caronni <negativo17@gmail.com> - 1:8.9.7.29-1
 - Update to 8.9.7.29.
 
