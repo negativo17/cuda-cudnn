@@ -6,7 +6,7 @@
 
 Name:           cuda-cudnn
 Version:        9.0.0.312
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          1
 Summary:        NVIDIA CUDA Deep Neural Network library (cuDNN)
 License:        NVIDIA Software Development Kit
@@ -14,7 +14,7 @@ URL:            https://developer.nvidia.com/cudnn
 ExclusiveArch:  x86_64 aarch64
 
 Source0:        https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-x86_64/cudnn-linux-x86_64-%{version}_cuda%{cuda_version}-archive.tar.xz
-Source2:        https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-sbsa/cudnn-linux-sbsa-%{version}_cuda%{cuda_version}-archive.tar.xz
+Source1:        https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-sbsa/cudnn-linux-sbsa-%{version}_cuda%{cuda_version}-archive.tar.xz
 
 %description
 The NVIDIA CUDA Deep Neural Network library (cuDNN) is a GPU-accelerated
@@ -73,6 +73,10 @@ chmod 644 %{buildroot}%{_includedir}/*
 %{_libdir}/libcudnn*.a
 
 %changelog
+* Mon Mar 18 2024 Simone Caronni <negativo17@gmail.com> - 1:9.0.0.312-2
+- Fix typo.
+- Trim changelog.
+
 * Sat Mar 16 2024 Simone Caronni <negativo17@gmail.com> - 1:9.0.0.312-1
 - Update to 9.0.0.312.
 
@@ -123,51 +127,3 @@ chmod 644 %{buildroot}%{_includedir}/*
 
 * Tue Mar 03 2020 Simone Caronni <negativo17@gmail.com> - 1:7.6.5.32-1
 - Update to 7.6.5.32.
-
-* Mon Nov 04 2019 Simone Caronni <negativo17@gmail.com> - 1:7.6.4.38-2
-- Split samples subpackage.
-
-* Mon Oct 07 2019 Simone Caronni <negativo17@gmail.com> - 1:7.6.4.38-1
-- Update to 7.6.4.38.
-
-* Tue Jun 11 2019 Simone Caronni <negativo17@gmail.com> - 1:7.6.0.64-1
-- Update to 7.6.0.64.
-
-* Sat Apr 06 2019 Simone Caronni <negativo17@gmail.com> - 1:7.5.0.56-1
-- Update to 7.5.0.56 for CUDA 10.1.
-
-* Thu Jan 03 2019 Simone Caronni <negativo17@gmail.com> - 1:7.4.2.24-1
-- Update to 7.4.2.24 for CUDA 10.
-
-* Tue Aug 28 2018 Simone Caronni <negativo17@gmail.com> - 1:7.2.1.38-1
-- Update to 7.2.1.38 for CUDA 9.2.
-
-* Thu Apr 26 2018 Simone Caronni <negativo17@gmail.com> - 1:7.1.3.16-1
-- Update to 7.1.3.16.
-
-* Thu Feb 15 2018 Simone Caronni <negativo17@gmail.com> - 1:7.0.5.15-3
-- Fix upgrade path from 5.1/6.0.
-
-* Fri Feb 02 2018 Simone Caronni <negativo17@gmail.com> - 1:7.0.5.15-2
-- Obsoletes cuDNN 5.x and 6.x on upgrades to CUDA 9.1.
-
-* Thu Dec 14 2017 Simone Caronni <negativo17@gmail.com> - 1:7.0.5.15-1
-- Update to 7.0.5.15.
-
-* Thu Oct 05 2017 Simone Caronni <negativo17@gmail.com> - 1:7.0.3.11-1
-- Update to 7.0.3.11.
-
-* Wed Aug 30 2017 Simone Caronni <negativo17@gmail.com> - 1:7-1
-- Update to 7.
-
-* Fri Apr 07 2017 Simone Caronni <negativo17@gmail.com> - 1:6.0-1
-- Update to version 6.0.
-
-* Thu Nov 17 2016 Simone Caronni <negativo17@gmail.com> - 1:5.1-3
-- Fix symlink for libraries.
-
-* Wed Oct 26 2016 Simone Caronni <negativo17@gmail.com> - 1:5.1-2
-- Remove useless CUDA dependency.
-
-* Thu Oct 20 2016 Simone Caronni <negativo17@gmail.com> - 1:5.1-1
-- First build.
