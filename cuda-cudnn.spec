@@ -5,8 +5,8 @@
 %global         cuda_version 12
 
 Name:           cuda-cudnn
-Version:        9.0.0.312
-Release:        2%{?dist}
+Version:        9.2.1.18
+Release:        1%{?dist}
 Epoch:          1
 Summary:        NVIDIA CUDA Deep Neural Network library (cuDNN)
 License:        NVIDIA Software Development Kit
@@ -73,6 +73,9 @@ chmod 644 %{buildroot}%{_includedir}/*
 %{_libdir}/libcudnn*.a
 
 %changelog
+* Thu Jul 11 2024 Simone Caronni <negativo17@gmail.com> - 1:9.2.1.18-1
+- Update to 9.2.1.18.
+
 * Mon Mar 18 2024 Simone Caronni <negativo17@gmail.com> - 1:9.0.0.312-2
 - Fix typo.
 - Trim changelog.
