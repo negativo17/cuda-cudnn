@@ -5,7 +5,7 @@
 %global         cuda_version 12
 
 Name:           cuda-cudnn
-Version:        9.6.0.74
+Version:        9.7.1.26
 Release:        1%{?dist}
 Epoch:          1
 Summary:        NVIDIA CUDA Deep Neural Network library (cuDNN)
@@ -59,8 +59,6 @@ mkdir -p %{buildroot}%{_includedir}
 cp -a include/* %{buildroot}%{_includedir}/
 chmod 644 %{buildroot}%{_includedir}/*
 
-%{?ldconfig_scriptlets}
-
 %files
 %license LICENSE
 %{_libdir}/libcudnn*.so.*
@@ -73,6 +71,9 @@ chmod 644 %{buildroot}%{_includedir}/*
 %{_libdir}/libcudnn*.a
 
 %changelog
+* Fri Feb 07 2025 Simone Caronni <negativo17@gmail.com> - 1:9.7.1.26-1
+- Update to 9.7.1.26.
+
 * Sat Dec 14 2024 Simone Caronni <negativo17@gmail.com> - 1:9.6.0.74-1
 - Update to 9.6.0.74.
 
